@@ -8,14 +8,14 @@ function Draw:print_outlined_text(text, x, y, color, outline_color)
     end
   end
 
-  print(text, x, y, color)
+  print(text, x, y, color or 7)
 end
 
 function Draw:print_bouncy_text(text, x, y, color, outline_color)
   for i = 1, #text do
     local char = sub(text, i, i)
     local offset = sin((time() * 2) + (i * 0.4)) * 1
-    offset = flr(offset + 0.5) -- round to nearest integer
+    offset = flr(offset + 0.5)
     Draw:print_outlined_text(char, x + (i - 1) * 4, y + offset, color)
   end
 end

@@ -3,7 +3,10 @@ version 42
 __lua__
 #include classes/base.lua
 #include classes/game.lua
+#include classes/character_selection.lua
 #include classes/gameplay.lua
+#include screens/character_selection.lua
+#include screens/gameplay.lua
 #include screens/start.lua
 #include draw.lua
 #include init.lua
