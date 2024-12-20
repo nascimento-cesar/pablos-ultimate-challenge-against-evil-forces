@@ -10,4 +10,6 @@ function _draw()
   elseif game.current_mode == "game_over" then
   elseif game.current_mode == "game_over_s" then
   end
+
+  print(debug, 0, 0)
 end

@@ -2,6 +2,15 @@ Draw = {}
 Questions = {}
 Utils = {}
 
+function Draw:print_bouncy_text(text, x, y, color, outline_color)
+  for i = 1, #text do
+    local char = sub(text, i, i)
+    local offset = sin((time() * 2) + (i * 0.4)) * 1
+    offset = flr(offset + 0.5)
+    Draw:print_outlined_text(char, x + (i - 1) * 4, y + offset, color)
+  end
+end
+
 function Draw:print_outlined_text(text, x, y, color, outline_color)
   for i = -1, 1 do
     for j = -1, 2 do
@@ -12,12 +21,12 @@ function Draw:print_outlined_text(text, x, y, color, outline_color)
   print(text, x, y, color or 7)
 end
 
-function Draw:print_bouncy_text(text, x, y, color, outline_color)
-  for i = 1, #text do
-    local char = sub(text, i, i)
-    local offset = sin((time() * 2) + (i * 0.4)) * 1
-    offset = flr(offset + 0.5)
-    Draw:print_outlined_text(char, x + (i - 1) * 4, y + offset, color)
+function Draw:print_text_block(text, x, y, color, outline_color)
+  local current_line = 1
+
+  for i = 1, #text, 27 do
+    Draw:print_outlined_text(sub(text, i, i + 27 - 1), x, y * current_line, color, outline_color)
+    current_line += 1
   end
 end
 
@@ -26,7 +35,7 @@ function Draw:get_h_center(text)
 end
 
 function Questions:build_questions(character_index)
-  local parsed_questions, questions = {}, ({ "question 1,correct,wrong|question 2,correct,wrong|question 3,correct,wrong", "", "", "" })[character_index]
+  local parsed_questions, questions = {}, ({ "you can then create the pair using a conditional statement.,correct,wrong", "", "", "" })[character_index]
 
   for question in all(split(questions, "|")) do
     local text, correct, wrong = unpack(split(question))
