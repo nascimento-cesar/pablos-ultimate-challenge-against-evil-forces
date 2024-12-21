@@ -7,6 +7,8 @@ function GameplayScreen:draw(gameplay)
   GameplayScreen:draw_question(gameplay)
   GameplayScreen:draw_character(gameplay)
   GameplayScreen:draw_buttons(gameplay)
+  GameplayScreen:draw_enemy_spawn_timer(gameplay)
+  GameplayScreen:draw_enemies(gameplay)
 end
 
 function GameplayScreen:draw_buttons(gameplay)
@@ -43,6 +45,29 @@ function GameplayScreen:draw_character(gameplay)
       spr(gameplay.character_sprites[4], 10, 70, 2, 2)
     end
   end
+end
+
+function GameplayScreen:draw_enemies(gameplay)
+end
+
+function GameplayScreen:draw_enemy_spawn_timer(gameplay)
+  local colors, x_2 = {}, ((128 / gameplay.default_enemy_spawn_timer) * flr(gameplay.enemy_spawn_timer))
+
+  if x_2 <= 42 then
+    if flr(sin(time() / 0.25)) == 0 then
+      colors = { 7, 5 }
+    else
+      colors = { 8, 2 }
+    end
+  elseif x_2 <= 84 then
+    colors = { 10, 9 }
+  elseif x_2 <= 128 then
+    colors = { 12, 1 }
+  end
+
+  line(0, 0, x_2, 0, colors[1])
+  line(0, 1, x_2, 1, colors[1])
+  line(0, 2, x_2, 2, colors[2])
 end
 
 function GameplayScreen:draw_question(gameplay)
