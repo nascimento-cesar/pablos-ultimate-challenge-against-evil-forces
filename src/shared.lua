@@ -2,6 +2,15 @@ Draw = {}
 Questions = {}
 Utils = {}
 
+function Draw:get_sprites(character_index)
+  return split(({
+    [1] = "0,2,4,6",
+    [2] = "8,10,12,14",
+    [3] = "32,34,36,38",
+    [4] = "40,42,44,46"
+  })[character_index])
+end
+
 function Draw:print_bouncy_text(text, x, y, color, outline_color)
   for i = 1, #text do
     local char = sub(text, i, i)
@@ -34,8 +43,8 @@ function Draw:get_h_center(text)
   return 64 - (text and #tostr(text) or 0) * 2
 end
 
-function Questions:build_questions(character_index)
-  local parsed_questions, questions = {}, ({ "you can then create the pair using a conditional statement.,correct,wrong", "", "", "" })[character_index]
+function Questions:build_questions()
+  local parsed_questions, questions = {}, "you can then create the pair using a conditional statement,correct,wrong|you can then create the pair using a conditional statement,correct,wrong|you can then create the pair using a conditional statement,correct,wrong"
 
   for question in all(split(questions, "|")) do
     local text, correct, wrong = unpack(split(question))
