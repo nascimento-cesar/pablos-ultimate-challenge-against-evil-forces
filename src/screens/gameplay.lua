@@ -15,15 +15,15 @@ function GameplayScreen:draw_buttons(gameplay)
   local x, y = GameplayScreen.limit_left_x, GameplayScreen.limit_bottom_y + 8
 
   if gameplay.character_action == "left" and gameplay.character_action_frame >= 6 then
-    Draw:draw_sprite(65, x, y)
+    Draw:draw_sprite(193, x, y)
   else
-    Draw:draw_sprite(64, x, y)
+    Draw:draw_sprite(192, x, y)
   end
 
   if gameplay.character_action == "right" and gameplay.character_action_frame >= 6 then
-    Draw:draw_sprite(65, x + 14, y)
+    Draw:draw_sprite(193, x + 14, y)
   else
-    Draw:draw_sprite(64, x + 14, y)
+    Draw:draw_sprite(192, x + 14, y)
   end
 end
 
@@ -50,8 +50,12 @@ function GameplayScreen:draw_character(gameplay)
     else
       Draw:draw_sprite(gameplay.character_sprites[4], x, y, 2, 2)
     end
-  else
-    Draw:draw_sprite(gameplay.character_sprites[1], x, y, 2, 2)
+  elseif gameplay.character_action == "sad" then
+    if gameplay.character_action_frame <= 4 then
+      Draw:draw_sprite(gameplay.character_sprites[5], x, y, 2, 2)
+    else
+      Draw:draw_sprite(gameplay.character_sprites[6], x, y, 2, 2)
+    end
   end
 end
 

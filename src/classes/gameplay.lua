@@ -53,7 +53,7 @@ function Gameplay:handle_question_timer()
 
     if self.question_timer <= 0 then
       self.is_correct_answer = false
-      self:start_character_action("face_palm")
+      self:start_character_action("sad")
     end
   end
 end
