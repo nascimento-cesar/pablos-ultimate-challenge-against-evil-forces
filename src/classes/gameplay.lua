@@ -10,9 +10,9 @@ function Gameplay:new(character_index)
   obj.correct_answers = 0
   obj.current_question = nil
   obj.current_question_index = 1
+  obj.default_question_timer = 150
   obj.enemies = {}
-  obj.default_enemy_spawn_timer = 150
-  obj.enemy_spawn_timer = obj.default_enemy_spawn_timer
+  obj.question_timer = obj.default_question_timer
   obj.is_correct_answer = nil
   obj.is_locked = false
   obj.questions = Questions:build_questions()
@@ -23,8 +23,8 @@ end
 
 function Gameplay:update()
   self:handle_character_action()
-  self:handle_enemy_spawn()
   self:handle_selected_answer()
+  self:handle_question_timer()
 end
 
 function Gameplay:handle_character_action()
@@ -41,18 +41,20 @@ function Gameplay:handle_character_action()
     self.character_action_frame = 1
     self.current_question_index += 1
     self.current_question = nil
-    self.enemy_spawn_timer = self.default_enemy_spawn_timer
+    self.question_timer = self.default_question_timer
     self.is_correct_answer = nil
     self.is_locked = false
   end
 end
 
-function Gameplay:handle_enemy_spawn()
-  self.enemy_spawn_timer -= 1
+function Gameplay:handle_question_timer()
+  if self.character_action == "idle" then
+    self.question_timer -= 1
 
-  if self.enemy_spawn_timer <= 0 then
-    self.enemy_spawn_timer = self.default_enemy_spawn_timer
-    self:spawn_enemies()
+    if self.question_timer <= 0 then
+      self.is_correct_answer = false
+      self:start_character_action("face_palm")
+    end
   end
 end
 
@@ -77,9 +79,7 @@ function Gameplay:handle_selected_answer()
     end
 
     if self.is_correct_answer ~= nil then
-      self.character_action = pressed_button
-      self.character_action_frame = 0
-      self.is_locked = true
+      self:start_character_action(pressed_button)
     end
   end
 end
@@ -94,4 +94,10 @@ function Gameplay:handle_wrong_answer()
 end
 
 function Gameplay:spawn_enemies()
+end
+
+function Gameplay:start_character_action(action)
+  self.character_action = action
+  self.character_action_frame = 0
+  self.is_locked = true
 end
