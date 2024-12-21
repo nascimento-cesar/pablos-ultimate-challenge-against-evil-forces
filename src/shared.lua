@@ -46,11 +46,27 @@ function Draw:print_outlined_text(text, x, y, color, outline_color)
 end
 
 function Draw:print_text_block(text, x, y, color, outline_color)
-  local current_line = 1
+  local words = split(text, " ", false)
+  local max_line_length = 27
+  local line_number = 1
+  local line_text = ""
 
-  for i = 1, #text, 27 do
-    Draw:print_outlined_text(sub(text, i, i + 27 - 1), x, y * current_line, color, outline_color)
-    current_line += 1
+  for word in all(words) do
+    if #line_text + 1 + #word > max_line_length then
+      Draw:print_outlined_text(line_text, x, y + (line_number * 8), color, outline_color)
+      line_number += 1
+      line_text = ""
+    end
+
+    if #line_text > 0 then
+      line_text = line_text .. " " .. word
+    else
+      line_text = word
+    end
+  end
+
+  if #line_text > 0 then
+    Draw:print_outlined_text(line_text, x, y + (line_number * 8), color, outline_color)
   end
 end
 
@@ -59,10 +75,10 @@ function Draw:get_h_center(text)
 end
 
 function Questions:build_questions()
-  local parsed_questions, questions = {}, "you can then create the pair using a conditional statement,correct,wrong|you can then create the pair using a conditional statement,correct,wrong|you can then create the pair using a conditional statement,correct,wrong"
+  local parsed_questions, questions = {}, "What is the final boss of Castlevania III: Dracula's Curse/Dracula/Death"
 
   for question in all(split(questions, "|")) do
-    local text, correct, wrong = unpack(split(question))
+    local text, correct, wrong = unpack(split(question, "/"))
     add(parsed_questions, rnd(1) < 0.5 and { text, correct, wrong, 1 } or { text, wrong, correct, 2 })
   end
 
