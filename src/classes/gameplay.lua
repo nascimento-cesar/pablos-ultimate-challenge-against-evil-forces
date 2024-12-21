@@ -6,7 +6,7 @@ function Gameplay:new(character_index)
   obj.character_action = "idle"
   obj.character_action_frame = 0
   obj.character_index = character_index
-  obj.character_sprites = Draw:get_sprites(character_index)
+  obj.character_sprites = Draw.character_sprites[character_index]
   obj.correct_answers = 0
   obj.current_question = nil
   obj.current_question_index = 1

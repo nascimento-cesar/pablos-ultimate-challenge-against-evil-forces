@@ -2,13 +2,28 @@ Draw = {}
 Questions = {}
 Utils = {}
 
-function Draw:get_sprites(character_index)
-  return split(({
-    [1] = "0,2,4,6",
-    [2] = "8,10,12,14",
-    [3] = "32,34,36,38",
-    [4] = "40,42,44,46"
-  })[character_index])
+Draw.character_info = {
+  [1] = { "hardcore pablo", "does something" },
+  [2] = { "wild pablo", "does something" },
+  [3] = { "smarty pants pablo", "does something" },
+  [4] = { "retro gamer pablo", "does something" }
+}
+Draw.character_sprites = {
+  [1] = { 0, 2, 4, 6 },
+  [2] = { 8, 10, 12, 14 },
+  [3] = { 32, 34, 36, 38 },
+  [4] = { 40, 42, 44, 46 }
+}
+
+function Draw:draw_map()
+  map(0, 0, 0, 0, 16, 16)
+end
+
+function Draw:draw_sprite(n, x, y, w, h, flip_x, flip_y)
+  palt(0, false)
+  palt(14, true)
+  spr(n, x, y, w or 1, h or 1, flip_x, flip_y)
+  palt()
 end
 
 function Draw:print_bouncy_text(text, x, y, color, outline_color)
