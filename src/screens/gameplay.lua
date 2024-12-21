@@ -1,9 +1,9 @@
 GameplayScreen = {}
-GameplayScreen.limit_left_x = 10
-GameplayScreen.limit_bottom_y = 70
+GameplayScreen.limit_left_x = 8
+GameplayScreen.limit_bottom_y = 64
 
 function GameplayScreen:draw(gameplay)
-  Draw:draw_map()
+  Draw:draw_map(2)
   GameplayScreen:draw_question(gameplay)
   GameplayScreen:draw_character(gameplay)
   GameplayScreen:draw_buttons(gameplay)
@@ -84,8 +84,8 @@ function GameplayScreen:draw_question(gameplay)
   if gameplay.current_question then
     local text, opt_a, opt_b = unpack(gameplay.current_question)
 
-    Draw:print_text_block(text, 10, 10)
-    Draw:print_outlined_text(opt_a, 10, 96)
-    Draw:print_outlined_text(opt_b, 92, 96)
+    Draw:print_text_block(text .. "?", GameplayScreen.limit_left_x, 12)
+    Draw:print_text_block(opt_a, GameplayScreen.limit_left_x + 4, 92, 10)
+    Draw:print_text_block(opt_b, 72, 92, 10)
   end
 end
